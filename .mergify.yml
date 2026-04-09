@@ -1,0 +1,9 @@
+# Mergify Configuration
+
+# This file configures Mergify to enable automatic merging of pull requests.
+
+pull_request:
+  add_reaction: 🚀
+  merge:
+    method: merge
+    commit_message: 'Merge pull request #{{pull.request.number}} from {{pull.request.head.repo.full_name}}'

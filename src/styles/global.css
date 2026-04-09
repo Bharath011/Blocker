@@ -12,11 +12,16 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100%;
+}
+
+body {
   font-family: 'Rajdhani', sans-serif;
-  background: #030816;
+  background: #010815;
 }
 
 .font-orbitron {
@@ -27,11 +32,17 @@ body {
   font-family: 'Rajdhani', sans-serif;
 }
 
-.app-bg {
-  background-image: url('https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?auto=format&fit=crop&w=1920&q=80');
+.app-scene {
+  background-image: url('https://images.unsplash.com/photo-1537420327992-d6e192287183?auto=format&fit=crop&w=2400&q=80');
   background-size: cover;
-  background-position: 70% center;
+  background-position: 64% 50%;
   background-repeat: no-repeat;
+}
+
+.scene-overlay {
+  background:
+    linear-gradient(90deg, rgba(1, 10, 30, 0.86) 0%, rgba(1, 10, 30, 0.8) 20%, rgba(1, 10, 30, 0.42) 48%, rgba(1, 8, 24, 0.58) 100%),
+    radial-gradient(circle at 76% 48%, rgba(74, 155, 255, 0.24) 0%, transparent 52%);
 }
 
 ::-webkit-scrollbar {
@@ -49,4 +60,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #86bbea;
+}
+
+@media (max-width: 1600px) {
+  .app-scene {
+    background-position: 68% 55%;
+  }
 }

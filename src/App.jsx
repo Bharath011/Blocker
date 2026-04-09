@@ -1,36 +1,71 @@
-import { useMemo, useState } from 'react';
-import Footer from './components/layout/Footer';
-import Header from './components/layout/Header';
-import { CORE_TABS, TABS } from './constants/navigation';
+import { useState } from 'react';
+import HeroSection from './components/hero/HeroSection';
+import MapMarker from './components/hero/MapMarker';
+import OverviewCard from './components/hero/OverviewCard';
+import Sidebar from './components/layout/Sidebar';
 import HomePage from './pages/HomePage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProjectsPage from './pages/ProjectsPage';
 import TeamPage from './pages/TeamPage';
 
-function CurrentView({ activeTab }) {
+const PAGE_COPY = {
+  Home: {
+    title: 'Advancing Energetics and Propulsion for Next-Generation Aerospace Systems',
+    overview:
+      'We conduct fundamental and applied research in chemical, hybrid, and electric propulsion systems with emphasis on energetic materials, ignition physics, and mission-ready validation.',
+  },
+  Team: {
+    title: 'Interdisciplinary Team Building India\'s Next Aerospace Breakthroughs',
+    overview:
+      'Our team includes faculty, doctoral scholars, and M.Tech researchers working across combustion diagnostics, plasma systems, and propulsion design optimization.',
+  },
+  Projects: {
+    title: 'Mission-Driven Projects in High-Impact Propulsion Research',
+    overview:
+      'From high-density fuels to electric thrusters, our projects partner with government and industry organizations to solve real mission constraints.',
+  },
+  Publications: {
+    title: 'Peer-Reviewed Publications from the EPL Research Pipeline',
+    overview:
+      'Publication data and downloadable references are being synced with our current archive and will be live soon.',
+  },
+  Updates: {
+    title: 'Latest Laboratory Announcements and Program Milestones',
+    overview:
+      'Track project launches, conference outcomes, and student opportunities as they are released.',
+  },
+  'Join us': {
+    title: 'Join the EPL Mission in Aerospace Innovation',
+    overview:
+      'Openings for interns, research assistants, and graduate candidates will be published here.',
+  },
+};
+
+function CurrentPage({ activeTab }) {
   if (activeTab === 'Home') return <HomePage />;
   if (activeTab === 'Team') return <TeamPage />;
   if (activeTab === 'Projects') return <ProjectsPage />;
-  if (!CORE_TABS.has(activeTab)) return <PlaceholderPage tab={activeTab} />;
-  return null;
+  return <PlaceholderPage tab={activeTab} />;
 }
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('Home');
-  const tabs = useMemo(() => TABS, []);
+  const copy = PAGE_COPY[activeTab] ?? PAGE_COPY.Home;
 
   return (
-    <div className="app-bg relative min-h-screen overflow-hidden text-white font-rajdhani">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_45%,rgba(17,94,182,0.2),transparent_45%),linear-gradient(90deg,rgba(4,10,24,0.92)_0%,rgba(4,10,24,0.72)_28%,rgba(4,10,24,0.3)_58%,rgba(4,10,24,0.65)_100%)]" />
+    <div className="app-scene relative min-h-screen overflow-hidden text-white">
+      <div className="scene-overlay absolute inset-0" />
 
-      <div className="relative z-10 flex min-h-screen">
-        <Header tabs={tabs} activeTab={activeTab} onSelect={setActiveTab} />
-        <main className="flex-1 pl-4 pr-4 md:pl-8 md:pr-8 lg:pl-2">
-          <CurrentView activeTab={activeTab} />
-        </main>
+      <Sidebar activeTab={activeTab} onSelect={setActiveTab} />
+
+      <MapMarker />
+      <HeroSection title={copy.title} />
+
+      <div className="absolute left-[390px] right-[4%] top-[10%] z-20 max-h-[42vh] overflow-auto rounded-3xl border border-white/20 bg-[#051127]/34 p-6 backdrop-blur-md">
+        <CurrentPage activeTab={activeTab} />
       </div>
 
-      <Footer />
+      <OverviewCard>{copy.overview}</OverviewCard>
     </div>
   );
 }
